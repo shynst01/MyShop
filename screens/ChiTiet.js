@@ -11,6 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import {Header, Left, Right, Icon,ListItem, Button ,Toast, Content } from 'native-base';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 import { connect } from 'react-redux';
 
@@ -30,6 +31,7 @@ class ChiTiet extends Component {
       data: this.props.navigation.state.params.data,
       soluong: 1,
       checkItem: 0,
+      showToast: false
     };
   }
   componentDidMount(){
@@ -38,10 +40,12 @@ class ChiTiet extends Component {
   buy = () =>{
     let check = false;
     if(this.state.valueSize === null)
-      Alert.alert(
-        'Thông báo',
-        'Vui lòng chọn kích cỡ'
-      )
+      Toast.show({
+        text: "Vui lòng chọn kích cỡ",
+        buttonText: "Okay",
+        position: "bottom",
+        type: "warning"
+      })
     else {
       const item = this.state.data;
       if(this.props.cart.length === 0){
@@ -65,16 +69,23 @@ class ChiTiet extends Component {
 
 
       }
-      Alert.alert(
-        'Thông báo',
-        'Thêm thành công'
-      )
+      Toast.show({
+        text: "Thêm vào giỏ hàng thành công",
+        buttonText: "Okay",
+        position: "bottom",
+        type: "success"
+      })
 
     }
   }
+  ratingCompleted(rating) {
+    alert("Rating is: " + rating);
+  }
   render() {
+
     const disable = this.state.soluong === 1 ? true : false;
     return (
+      <View>
       <ScrollView>
         <Header transparent>
           <Left>
@@ -82,7 +93,7 @@ class ChiTiet extends Component {
               <Icon name='action-undo' type='SimpleLineIcons' />
             </Button>
           </Left>
-          <Right />
+          <Right/>
         </Header>
         <View style={styles.container}>
           <View style={{alignItems: 'center'}}>
@@ -125,16 +136,40 @@ class ChiTiet extends Component {
               </Button>
             </View>
           </View>
+          <View>
+            <Text>
+              Thông tin
+            </Text>
+          </View>
+          <View>
+            <Text>
+              Đánh giá
+            </Text>
+            <Rating
+              ratingCount={5}
+              imageSize={40}
+              onFinishRating={this.ratingCompleted}
+              startingValue={5}
+            />
+          </View>
+          <View>
+            <Text>
+              Bình luận
+            </Text>
+            <View>
 
-          <Content style={{flex: 1,marginVertical: 50}}>
-            <Button rounded success style={{paddingHorizontal: 10}} onPress={this.buy}>
-              <Text>
-                Mua sản phẩm
-              </Text>
-            </Button>
-          </Content>
+            </View>
+          </View>
         </View>
       </ScrollView>
+        <View>
+          <Button success onPress={this.buy}>
+            <Text style={{textAlign: 'center'}}>
+              Mua sản phẩm
+            </Text>
+          </Button>
+        </View>
+      </View>
     );
   }
 }

@@ -5,12 +5,15 @@ import {
 } from 'react-native';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import { Root } from "native-base";
 import TabNavigator from './navigation/TabNavigator';
 
 const App = () => {
   return (
     <Provider store={store}>
-     <TabNavigator />
+      <Root>
+        <TabNavigator />
+      </Root>
     </Provider>
   );
 };
@@ -18,7 +21,7 @@ const App = () => {
 const defaultState = {
   cart: [],
   total: 0,
-  count: 0,
+  count: 0
 }
 
 
@@ -29,7 +32,9 @@ const cartItems = (state = defaultState, action) => {
               ...state,
               cart: [...state.cart,action.payload],
               total: state.total + (action.payload.gia * action.payload.soluong),
+              count: state.count + 1,
             }
+            this.props.navigation.setParams({count:state.count});
         case 'TANG_SOLUONG':
             return {
               ...state,

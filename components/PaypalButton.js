@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  Modal,
-  Button
+  Image
 } from 'react-native';
-
+import {Button,Text} from 'native-base';
 import RNPaypal from 'react-native-paypal-android';
+const ppIcon = require('../imgs/paypal.png');
 const client = {
   sandbox: 'ATzJkwKso87N1OCiPWrUSPQILOiVrx-jsBjUJVrSXt1qH2GfYNRE2vx548zqifkgc8MxyNjozTcxKQ9a',
 }
 
-export default class Test extends Component {
-  state = {
-    modalVisible: false,
-  };
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
+export default class PaypalButton extends Component {
   render() {
     return (
-      <View style={styles.container}>
       <Button
-        title="Thanh toán paypal"
+      rounded
         onPress={async () => {
           try {
               await RNPaypal.config({
@@ -31,13 +23,8 @@ export default class Test extends Component {
                 environment: RNPaypal.constants.env.SANDBOX
               })
             const pay = await RNPaypal.buy({
-              value: 1,
-              productName: 'Test1',
-              currency: 'USD',
-              mode: RNPaypal.constants.mode.PAYMENT_INTENT_SALE
-            },{
-              value: 1.99,
-              productName: 'Testanto 100',
+              value: this.props.total/23000,
+              productName: 'Thanh toán',
               currency: 'USD',
               mode: RNPaypal.constants.mode.PAYMENT_INTENT_SALE
             });
@@ -46,9 +33,17 @@ export default class Test extends Component {
             console.log(e);// NO MONEY :()
           }
         }}
-      />
-      </View>
-    )
+        style={{width: 240,height: 40,backgroundColor:'goldenrod'}}
+      >
+        <Text style={{marginLeft: 5}}>
+          Thanh Toán
+        </Text>
+        <Image
+        style={{width: 80, height: 40,marginLeft: 5}}
+        source={ppIcon}
+        />
+      </Button>
+    );
   }
 }
 

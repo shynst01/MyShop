@@ -8,10 +8,16 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
     "native-base": "^2.13.7",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-gesture-handler": "^1.4.1",
+    "react-native-modal": "^11.4.0",
+    "react-native-paypal-android": "0.0.4",
+    "react-native-ratings": "^6.5.0",
     "react-native-reanimated": "^1.2.0",
     "react-native-screens": "^1.0.0-alpha.23",
     "react-native-search-header": "^0.3.4",
@@ -23,7 +29,8 @@
     "react-navigation-stack": "^1.5.1",
     "react-navigation-tabs": "^2.3.0",
     "react-redux": "^7.1.1",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "vn-payments": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

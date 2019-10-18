@@ -5,7 +5,7 @@ import { createAppContainer } from 'react-navigation';
 import { Icon, Text, Badge } from 'native-base';
 import { StackActions, NavigationActions } from 'react-navigation';
 
-import { TrangChuStack, TimKiemStack } from './StackNavigator';
+import { TrangChuStack, TimKiemStack, GioHangStack, AuthStack } from './StackNavigator';
 import GioHang from '../screens/GioHang';
 import ThongTin from '../screens/ThongTin';
 
@@ -35,23 +35,21 @@ const createTabNavigator = createBottomTabNavigator({
     }
   },
   GioHang: {
-    screen: GioHang,
+    screen: GioHangStack,
     navigationOptions :{
       tabBarOnPress: ({ navigation, defaultHandler }) => {
       navigation.dispatch(StackActions.popToTop());
       defaultHandler();
       },
-      title: 'Giỏ Hàng',
-      tabBarIcon:({ focused }) => {
-        return (
-              <Icon name='basket' style={{color: focused ? '#e91e63' : 'slategray' }} type='SimpleLineIcons' />
-          )
-      }
     }
   },
   ThongTin: {
-    screen: ThongTin,
+    screen: AuthStack,
     navigationOptions :{
+      title: 'Thông tin',
+      tabBarIcon:({ focused }) => {
+        return <Icon name='user' style={{color: focused ? '#e91e63' : 'slategray' }} type='SimpleLineIcons' />
+      },
       tabBarOnPress: ({ navigation, defaultHandler }) => {
       navigation.dispatch(StackActions.popToTop());
       defaultHandler();

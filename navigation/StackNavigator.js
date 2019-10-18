@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-
+import { View } from 'react-native';
+import { createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Icon } from 'native-base';
+import { Icon, Badge, Text } from 'native-base';
 
 import TrangChu from '../screens/TrangChu';
 import TimKiem from '../screens/TimKiem';
 import ChiTiet from '../screens/ChiTiet';
+import GioHang from '../screens/GioHang';
+import ThanhToan from '../screens/ThanhToan';
+import Loading from '../screens/Loading';
+import DangNhap from '../screens/DangNhap';
+import ThongTin from '../screens/ThongTin';
+import ThongTinTK from '../screens/ThongTinTK';
+import DangKy from '../screens/DangKy';
 
 const TrangChuStack = createStackNavigator({
     TrangChu: TrangChu,
@@ -39,4 +47,41 @@ const TimKiemStack = createStackNavigator({
   }
 );
 
-export { TrangChuStack, TimKiemStack };
+const AuthStack = createSwitchNavigator({
+  Loading: Loading,
+  ThongTinTK: ThongTinTK,
+  DangNhap: DangNhap,
+  ThongTin: ThongTin,
+  TrangChu: TrangChu,
+  ThanhToan: ThanhToan,
+},{
+  initialRouteName: 'Loading' ,
+  }
+)
+
+const DangNhapStack = createStackNavigator({
+  DangNhap: AuthStack,
+  DangKy: DangKy
+});
+
+const GioHangStack = createStackNavigator({
+  GioHang: GioHang,
+  ThanhToan: AuthStack
+},{
+  initialRouteName: 'GioHang' ,
+  headerMode: 'none',
+  navigationOptions: {
+      headerVisible: false,
+      title: 'Giỏ Hàng',
+      tabBarIcon:({ focused }) => {
+        return(
+          <View style={{}}>
+              <Icon name='basket' style={{color: focused ? '#e91e63' : 'slategray'}} type='SimpleLineIcons' />
+          </View>
+
+        )
+      }
+  }
+});
+
+export { TrangChuStack, TimKiemStack , GioHangStack, AuthStack };

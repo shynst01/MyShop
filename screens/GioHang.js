@@ -5,14 +5,24 @@ import {
   Image,
   FlatList,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal
 } from 'react-native';
 import { Icon, Badge, Text, Card, CardItem, Button, Left, Right, Body , Item,  Header} from 'native-base';
 import { connect } from 'react-redux';
 
 class GioHang extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hide: true };
+  }
+  componentDidMount(){
+    if(this.props.cart.length > 0){
+      this.setState({hide: false});
+    }
+  }
   renderItem = ({ item }) => {
-    const disable = item.soluong === 1 ? true : false;
+    let disable = item.soluong === 1 ? true : false;
     return (
       <View>
         <Card>
@@ -67,8 +77,6 @@ class GioHang extends Component {
               numColumns={1}
               keyExtractor={item => item.id + '_' + item.idkichco}
             />
-            <Text>
-            </Text>
           </View>
           <View style={{flex: 1, backgroundColor: 'skyblue', }}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around',marginTop: 15}}>
@@ -80,6 +88,16 @@ class GioHang extends Component {
               </Text>
             </View>
           </View>
+          {
+            this.props.total > 0 &&
+            <View style={{flex:1,alignItems: 'center'}}>
+              <Button block onPress={() => {this.props.navigation.navigate('ThongTinTK')}}>
+                <Text>
+                  Xác nhận thanh Toán
+                </Text>
+              </Button>
+            </View>
+          }
       </View>
     );
   }
